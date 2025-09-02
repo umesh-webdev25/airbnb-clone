@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Heroicons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- ✅ Top Navbar -->
+  <%- include('../partials/nav') %>
+
+  <!-- ✅ Main Login Container -->
+  <div class="flex justify-center items-start pt-16 flex-grow">
+    <div
+      class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md border border-gray-200 hover:shadow-pink-200 transition-shadow w-[50rem] h-full">
+      <h2 class="text-2xl font-bold text-center text-pink-600 mb-2">Login</h2>
+
+      <% if (typeof errorMessage === 'string' && errorMessage) { %>
+        <div class="mb-4 text-sm text-red-700 bg-red-100 border border-red-200 rounded p-3">
+          <%= errorMessage %>
+        </div>
+      <% } %>
+
+      <form action="/login" method="POST" class="space-y-5">
+
+        <!-- Email / Username Field -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email / Username</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+              <i data-feather="mail"></i>
+            </span>
+            <input type="text" id="email" name="emailOrUsername"
+              placeholder="Enter your email or username"
+              value="<%= values && values.emailOrUsername ? values.emailOrUsername : '' %>"
+              required
+              class="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400 hover:shadow-pink-200 transition-shadow" />
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+              <i data-feather="lock"></i>
+            </span>
+            <input type="password" id="password" name="password"
+              placeholder="Enter your password" required
+              class="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400 hover:shadow-pink-200 transition-shadow" />
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <input type="submit" value="Sign In"
+            class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition duration-200">
+        </div>
+
+        <a href="host/home" class="block text-center text-sm text-pink-600 hover:underline">
+          Don't have an account? Sign Up
+        </a>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Footer at bottom -->
+  <footer class="bg-white border-t border-gray-200 py-8 mt-auto">
+    <div class="container mx-auto px-4">
+      <p class="text-center text-gray-500 text-sm">
+        &copy; 2023 Dream Homes. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Initialize Feather Icons -->
+  <script>
+    feather.replace();
+  </script>
+
+</body>
+</html>

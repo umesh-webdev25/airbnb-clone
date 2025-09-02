@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airbnb App | User Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            airbnb: {
+              pink: '#FF385C',
+              dark: '#222222',
+              light: '#717171',
+            }
+          },
+          boxShadow: {
+            'airbnb': '0 6px 16px rgba(0, 0, 0, 0.12)',
+            'airbnb-hover': '0 8px 24px rgba(0, 0, 0, 0.16)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .user-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .user-card:hover {
+      transform: translateY(-4px);
+    }
+    .avatar-container {
+      background: linear-gradient(135deg, #FF385C 0%, #9141ac 100%);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gray-50">
+
+  <!-- Navbar -->
+  <%- include('../partials/nav') %>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <!-- Header Section -->
+      <div class="px-8 py-6 border-b border-gray-100">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-airbnb-dark">User Management</h1>
+            <p class="text-airbnb-light mt-2">Manage all registered users in the system</p>
+          </div>
+          <div class="mt-4 md:mt-0">
+            <a href="/host/home" 
+               class="inline-flex items-center px-4 py-2 bg-airbnb-pink text-white rounded-lg hover:bg-pink-600 transition-all shadow-sm">
+              <i class="fas fa-plus mr-2"></i>
+              Add New User
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Grid -->
+      <div class="p-6">
+        <% if (Registration.length > 0) { %>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+            <% Registration.forEach(user => { %>
+            <div class="user-card bg-white rounded-xl shadow-airbnb hover:shadow-airbnb-hover overflow-hidden border border-gray-100 flex flex-col w-full max-w-xs">
+              
+      
+              <div class="avatar-container relative h-50 w-full overflow-hidden">
+                <% if (user.profileImage) { %>
+                  <!-- Show uploaded profile image if available -->
+                  <img src="<%= user.profileImage %>" 
+                       alt="<%= user.name %>"
+                       class="w-full h-full object-cover">
+                <% } else { %>
+                  <!-- Fallback to avatar if no profile image exists -->
+                  <img src="https://ui-avatars.com/api/?name=<%= encodeURIComponent(user.name) %>&background=ffffff&color=FF385C&size=300"
+                       alt="<%= user.name %>"
+                       class="w-full h-full object-contain p-6">
+                <% } %>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
+
+              <!-- User Info -->
+              <div class="p-5 flex-grow flex flex-col">
+                <div class="flex-grow">
+                  <h3 class="text-xl font-bold text-airbnb-dark truncate">
+                    <%= user.name %>
+                  </h3>
+                  <div class="mt-3 space-y-2">
+                    <div class="flex items-start">
+                      <i class="fas fa-user text-airbnb-light mt-1 mr-2 w-4"></i>
+                      <span class="text-gray-600 truncate"><%= user.username %></span>
+                    </div>
+                    <div class="flex items-start">
+                      <i class="fas fa-envelope text-airbnb-light mt-1 mr-2 w-4"></i>
+                      <span class="text-gray-600 text-sm break-all"><%= user.email %></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="mt-6 flex gap-3">
+                  <a href="/host/editing/<%= user._id %>?editing=true"
+                    class="flex-grow px-4 py-2 bg-white text-airbnb-pink rounded-lg border border-airbnb-pink hover:bg-pink-50 transition flex items-center justify-center gap-2 text-sm font-medium">
+                    <i class="fas fa-edit"></i>
+                    <span>Edit</span>
+                  </a>
+                  <form action="/host/delete/<%= user._id %>" method="POST" class="flex-grow">
+                    <button type="submit"
+                      class="w-full px-4 py-2 bg-airbnb-pink text-white rounded-lg hover:bg-pink-600 transition flex items-center justify-center gap-2 text-sm font-medium">
+                      <i class="fas fa-trash"></i>
+                      <span>Delete</span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+
+          <!-- Empty State -->
+          <div class="text-center py-16">
+            <div class="mx-auto w-24 h-24 bg-gradient-to-br from-airbnb-pink to-purple-500 rounded-full flex items-center justify-center mb-4 text-white">
+              <i class="fas fa-users text-3xl"></i>
+            </div>
+            <h3 class="text-xl font-medium text-gray-700">No users found</h3>
+            <p class="text-gray-500 mt-2 mb-6">Get started by adding your first user</p>
+            <a href="/host/home" 
+               class="inline-flex items-center px-4 py-2 bg-airbnb-pink text-white rounded-lg hover:bg-pink-600 transition-all shadow-sm">
+              <i class="fas fa-plus mr-2"></i>
+              Add New User
+            </a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-white border-t mt-12 py-6">
+    <div class="container mx-auto px-4 text-center text-gray-500">
+      <p>© 2023 Airbnb Clone. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

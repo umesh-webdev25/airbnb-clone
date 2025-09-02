@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= listing.home %> - Dream Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'playfair': ['"Playfair Display"', 'serif'],
+            'poppins': ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            'pink': {
+              '50': '#fdf2f8',
+              '100': '#fce7f3',
+              '200': '#fbcfe8',
+              '300': '#f9a8d4',
+              '400': '#f472b6',
+              '500': '#ec4899',
+              '600': '#db2777',
+              '700': '#be185d',
+              '800': '#9d174d',
+              '900': '#831843',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .gradient-text {
+      background: linear-gradient(45deg, #ec4899, #db2777);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .property-image {
+      height: 400px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-poppins">
+  
+  <!-- Navigation -->
+  <%- include('../partials/nav') %>
+
+  <!-- Hero Image Section -->
+<!-- Hero Image Section -->
+<div class="relative">
+  <div 
+    class="property-image w-full"
+    style="background-image: url('<%= listing.image || `https://source.unsplash.com/1600x900/?${encodeURIComponent(listing.city)},luxury+home` %>')"
+  ></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="absolute bottom-8 left-0 px-4 w-full">
+      <h1 class="text-4xl md:text-5xl font-bold text-white font-playfair mb-2"><%= listing.home %></h1>
+      <div class="flex items-center text-white/90">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span><%= listing.city %>, <%= listing.country %></span>
+        <span class="mx-2">•</span>
+        <span class="font-semibold text-pink-300">₹<%= listing.price.toLocaleString() %> / night</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-12">
+    <div class="flex flex-col lg:flex-row gap-12">
+      <!-- Left Column - Property Details -->
+      <div class="lg:w-2/3">
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <h2 class="text-3xl font-bold text-gray-800 font-playfair mb-6 border-b border-gray-100 pb-4">Property Description</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="flex items-center">
+              <div class="bg-pink-100 p-3 rounded-lg mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-gray-500 text-sm">Property</h3>
+                <p class="font-semibold"><%= listing.home %></p>
+              </div>
+            </div>
+            
+            <div class="flex items-center">
+              <div class="bg-pink-100 p-3 rounded-lg mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-gray-500 text-sm">Location</h3>
+                <p class="font-semibold"><%= listing.city %>, <%= listing.country %></p>
+              </div>
+            </div>
+            
+            <div class="flex items-center">
+              <div class="bg-pink-100 p-3 rounded-lg mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-gray-500 text-sm">Price</h3>
+                <p class="font-semibold">₹<%= listing.price.toLocaleString() %> / night</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center">
+              <div class="bg-pink-100 p-3 rounded-lg mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-gray-500 text-sm">Availability</h3>
+                <p class="font-semibold">Flexible dates</p>
+              </div>
+            </div>
+          </div>
+          
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">About this property</h3>
+          <p class="text-gray-600 leading-relaxed">
+            This beautiful <%= listing.home %> in <%= listing.city %> offers a perfect blend of comfort and style. 
+            Located in one of the most desirable neighborhoods, this property provides 
+            easy access to local attractions while maintaining a peaceful atmosphere. 
+            The space is thoughtfully designed with modern amenities to ensure a 
+            memorable stay for all guests.
+          </p>
+        </div>
+        
+        <!-- Amenities Section -->
+        <div class="bg-white rounded-xl shadow-lg p-8">
+          <h2 class="text-3xl font-bold text-gray-800 font-playfair mb-6 border-b border-gray-100 pb-4">Amenities</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+              </svg>
+              <span>High-speed WiFi</span>
+            </div>
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+              </svg>
+              <span>Air conditioning</span>
+            </div>
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+              </svg>
+              <span>Dedicated workspace</span>
+            </div>
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
+              </svg>
+              <span>Self check-in</span>
+            </div>
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
+              </svg>
+              <span>Kitchen</span>
+            </div>
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd" />
+              </svg>
+              <span>Washer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column - Booking Card -->
+      <div class="lg:w-1/3">
+        <div class="bg-white rounded-xl shadow-lg sticky top-8 overflow-hidden">
+          <div class="p-6 border-b border-gray-200">
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Book your stay</h3>
+            <p class="text-pink-600 font-semibold text-lg">₹<%= listing.price.toLocaleString() %> <span class="text-gray-500 text-sm font-normal">/ night</span></p>
+          </div>
+          
+          <div class="p-6">
+            <div class="mb-6">
+              <label class="block text-gray-700 text-sm font-medium mb-2" for="dates">Dates</label>
+              <input type="date" id="dates" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-pink-500 focus:border-pink-500" placeholder="Select dates">
+            </div>
+            
+            <div class="mb-6">
+              <label class="block text-gray-700 text-sm font-medium mb-2" for="guests">Guests</label>
+              <select id="guests" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-pink-500 focus:border-pink-500">
+                <option>1 guest</option>
+                <option>2 guests</option>
+                <option>3 guests</option>
+                <option>4 guests</option>
+                <option>5+ guests</option>
+              </select>
+            </div>
+            
+            <button class="w-full bg-gradient-to-r from-pink-600 to-pink-700 text-white font-bold py-4 px-4 rounded-lg hover:from-pink-700 hover:to-pink-800 transition-all duration-300 shadow-lg">
+              Reserve
+            </button>
+            
+            <p class="text-center text-gray-500 text-sm mt-4">You won't be charged yet</p>
+            
+            <div class="mt-6 border-t border-gray-200 pt-4">
+              <div class="flex justify-between mb-2">
+                <span class="text-gray-600">₹<%= listing.price.toLocaleString() %> x 5 nights</span>
+                <span class="font-medium">₹<%= (listing.price * 5).toLocaleString() %></span>
+              </div>
+              <div class="flex justify-between mb-2">
+                <span class="text-gray-600">Cleaning fee</span>
+                <span class="font-medium">₹1,200</span>
+              </div>
+              <div class="flex justify-between mb-2">
+                <span class="text-gray-600">Service fee</span>
+                <span class="font-medium">₹900</span>
+              </div>
+              <div class="flex justify-between font-bold text-lg pt-2 border-t border-gray-200 mt-2">
+                <span>Total</span>
+                <span>₹<%= (listing.price * 5 + 1200 + 900).toLocaleString() %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Call to Action -->
+  <div class="bg-pink-50 py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-gray-800 font-playfair mb-4">Ready for your dream stay?</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto mb-8">Book now and experience the perfect getaway at <%= listing.home %></p>
+      <a href="/listings/book/<%= listing._id %>" class="inline-block bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg">
+        Reserve Your Dates
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 py-8">
+    <div class="container mx-auto px-4">
+      <p class="text-center text-gray-500 text-sm">
+        &copy; 2023 Dream Homes. All rights reserved.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

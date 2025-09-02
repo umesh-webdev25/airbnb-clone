@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-pink-100 via-white to-pink-50 min-h-screen flex flex-col">
+  <%- include('../partials/nav') %>
+
+  <!-- Center content -->
+  <div class="flex flex-col items-center justify-center flex-1 px-4">
+    <div
+      class="bg-white p-8 rounded-2xl shadow-xl text-center max-w-md w-full transform transition duration-300 hover:scale-[1.02]">
+      
+      <!-- Success Icon -->
+      <div class="flex justify-center mb-4">
+        <div class="bg-green-100 p-4 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-500" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <header class="mb-4">
+        <h1 class="text-3xl font-bold text-pink-600">Submission Successful!</h1>
+      </header>
+
+      <!-- Message -->
+      <p class="text-gray-600 mb-6">Your form has been submitted successfully. Thank you for your response!</p>
+
+      <!-- Button -->
+      <a href="/"
+        class="inline-block px-6 py-3 bg-pink-500 text-white rounded-lg shadow hover:bg-pink-600 transition">
+        Go to Home
+      </a>
+    </div>
+  </div>
+  <footer class="bg-white border-t border-gray-200 py-8">
+    <div class="container mx-auto px-4">
+      <p class="text-center text-gray-500 text-sm">
+        &copy; 2023 Dream Homes. All rights reserved.
+      </p>
+    </div>
+  </footer>
+</body>
+
+</html>

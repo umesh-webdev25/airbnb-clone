@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listings | Dream Homes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'playfair': ['"Playfair Display"', 'serif'],
+              'poppins': ['Poppins', 'sans-serif'],
+            },
+            colors: {
+              'pink': {
+                '50': '#fdf2f8',
+                '100': '#fce7f3',
+                '200': '#fbcfe8',
+                '300': '#f9a8d4',
+                '400': '#f472b6',
+                '500': '#ec4899',
+                '600': '#db2777',
+                '700': '#be185d',
+                '800': '#9d174d',
+                '900': '#831843',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .gradient-text {
+        background: linear-gradient(45deg, #ec4899, #db2777);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 min-h-screen font-poppins">
+    <%- include('../partials/nav') %>
+
+    <main class="flex flex-col items-center justify-start py-12 px-4 sm:px-6 lg:px-8 gap-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-playfair font-bold gradient-text mb-2">Discover Your Dream Home</h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">Browse our curated selection of beautiful properties around the world</p>
+      </div>
+
+      <div class="bg-white w-full max-w-7xl px-6 py-8 rounded-xl shadow-lg space-y-6 hover:shadow-xl transition-shadow duration-300 border border-pink-100">
+        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-pink-100 pb-4 gap-4">
+          <h2 class="text-2xl font-bold text-pink-700 font-playfair">Featured Listings</h2>
+          <div class="flex gap-3">
+            <a
+              href="/listings/new"
+              class="px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+              </svg>
+              Add Listing
+            </a>
+          </div>
+        </div>
+
+        <% if (!listings || listings.length === 0) { %>
+          <div class="text-center py-16">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-pink-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <h3 class="mt-4 text-lg font-medium text-gray-900">No listings yet</h3>
+            <p class="mt-1 text-gray-500">Be the first to add a beautiful property!</p>
+            <div class="mt-6">
+              <a href="/listings/new" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-pink-600 hover:bg-pink-700 focus:outline-none">
+                Create Listing
+              </a>
+            </div>
+          </div>
+        <% } else { %>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <% listings.forEach(listing => { %>
+              <li class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-pink-200">
+                <div class="relative h-56 w-full overflow-hidden">
+                  <img
+                    src="<%= listing.imageUrl ? listing.imageUrl : 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' %>"
+                    alt="<%= listing.home %>"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onerror="this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                  <div class="absolute bottom-0 left-0 p-4 text-white">
+                    <h3 class="text-xl font-bold"><%= listing.home %></h3>
+                    <p class="text-pink-200"><%= listing.city %>, <%= listing.country %></p>
+                  </div>
+                  <div class="absolute top-4 right-4 bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+                    ₹<%= listing.price.toLocaleString() %>
+                  </div>
+                </div>
+                <div class="p-5 space-y-3">
+                  <div class="flex items-center text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-pink-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                    </svg>
+                    <span><%= listing.city %>, <%= listing.country %></span>
+                  </div>
+                  <div class="flex justify-between items-center pt-2">
+                    <a
+                      href="/listings/<%= listing._id %>"
+                      class="text-pink-600 hover:text-pink-800 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      View details
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </a>
+                    <button class="text-pink-500 hover:text-pink-700">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 py-8 mt-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-center text-gray-500 text-sm">
+          &copy; 2023 Dream Homes. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

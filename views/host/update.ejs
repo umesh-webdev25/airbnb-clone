@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Successful</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-pink-50 to-pink-100 min-h-screen flex flex-col">
+  <%- include('../partials/nav') %>
+
+  <!-- Centered Content -->
+  <div class="flex flex-col items-center justify-center flex-grow px-4">
+    <div
+      class="bg-white p-10 rounded-2xl shadow-lg border border-pink-200 text-center max-w-lg w-full transform transition-all hover:scale-105">
+      
+      <!-- Success Icon -->
+      <div class="flex justify-center mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 6.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 
+            0l7-7a1 1 0 000-1.414z"
+            clip-rule="evenodd" />
+        </svg>
+      </div>
+
+      <!-- Title -->
+      <header class="mb-4">
+        <h1 class="text-3xl font-bold text-pink-600">Update Successful 🎉</h1>
+      </header>
+
+      <!-- Message -->
+      <p class="text-gray-600 mb-6">Your details have been updated successfully.</p>
+
+      <!-- Button -->
+      <a href="/index"
+        class="inline-block bg-pink-500 text-white px-6 py-2 rounded-full shadow-md hover:bg-pink-600 transition-all">
+        Go to User Page
+      </a>
+    </div>
+  </div>
+  <footer class="bg-white border-t border-gray-200 py-8">
+    <div class="container mx-auto px-4">
+      <p class="text-center text-gray-500 text-sm">
+        &copy; 2023 Dream Homes. All rights reserved.
+      </p>
+    </div>
+  </footer>
+</body>
+
+</html>
