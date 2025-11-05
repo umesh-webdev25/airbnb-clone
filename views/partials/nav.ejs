@@ -3,57 +3,139 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Test Navbar</title>
+  <title>Airbnb Clone</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .nav-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .nav-link {
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: white;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::before {
+      width: 100%;
+    }
+    .logo-pulse {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: .8;
+      }
+    }
+  </style>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
 
-  <!-- Navbar -->
-  <nav class="flex justify-between items-center h-20 w-full bg-white px-10 shadow-md hover:shadow-pink-200 transition-shadow">
-    
-    <!-- Logo & Title -->
-    <div class="flex items-center gap-3">
-      <!-- Home icon -->
-      <i data-lucide="home" class="w-8 h-8 text-pink-600"></i>
-      <h1 class="text-3xl font-extrabold text-pink-700 tracking-wide">Airbnb App</h1>
-    </div>
-
-    <!-- Navigation Links -->
-    <div class="flex items-center space-x-4 text-sm font-medium">
-      <a href="/" class="px-4 py-2 rounded-lg bg-pink-600 text-white hover:bg-pink-700 transition duration-300">Home</a>
-
-      <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
-        <a href="/index" class="px-4 py-2 rounded-lg bg-pink-600 text-white hover:bg-pink-700 transition duration-300">
-          User
-        </a>
-        <a href="/listings/new" class="px-4 py-2 rounded-lg bg-pink-600 text-white hover:bg-pink-700 transition duration-300">
-          Add Listing
-        </a>
-        <a href="/listings" class="px-4 py-2 rounded-lg bg-gray-200 text-pink-700 hover:bg-gray-300 transition duration-300">
-          Listings
-        </a>
-      <% } %>
-
-      <a href="/host/about" class="px-4 py-2 rounded-lg bg-gray-200 text-pink-700 hover:bg-gray-300 transition duration-300">
-        About
+  <!-- Enhanced Navbar -->
+  <nav class="nav-gradient h-20 w-full px-6 md:px-10 shadow-2xl sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
+    <div class="max-w-7xl mx-auto h-full flex justify-between items-center">
+      
+      <!-- Logo & Title -->
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="relative">
+          <i data-lucide="home" class="w-10 h-10 text-white logo-pulse drop-shadow-lg"></i>
+          <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 rounded-full blur-xl transition-opacity duration-300"></div>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight drop-shadow-md">
+          Dream<span class="text-yellow-300">Stays</span>
+        </h1>
       </a>
 
-      <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
-        <a href="/logout" class="px-4 py-2 rounded-lg bg-gray-200 text-pink-700 hover:bg-gray-300 transition duration-300">
-          Logout
+      <!-- Navigation Links -->
+      <div class="hidden md:flex items-center space-x-2 lg:space-x-3">
+        <a href="/" class="nav-link px-4 py-2 rounded-lg text-white font-medium hover:bg-white hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105">
+          <i data-lucide="home" class="w-4 h-4 inline mr-1"></i>
+          Home
         </a>
-      <% } else { %>
-        <a href="/login" class="px-4 py-2 rounded-lg bg-pink-600 text-white hover:bg-pink-700 transition duration-300">
-          Login
+
+        <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+          
+          <!-- Admin-only link -->
+          <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+            <a href="/index" class="px-4 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold hover:from-yellow-500 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+              <span class="text-lg">👑</span> Admin Panel
+            </a>
+          <% } %>
+          
+          <a href="/listings/new" class="nav-link px-4 py-2 rounded-lg text-white font-medium hover:bg-white hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105">
+            <i data-lucide="plus-circle" class="w-4 h-4 inline mr-1"></i>
+            Add Listing
+          </a>
+          <a href="/listings" class="nav-link px-4 py-2 rounded-lg text-white font-medium hover:bg-white hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105">
+            <i data-lucide="list" class="w-4 h-4 inline mr-1"></i>
+            Listings
+          </a>
+        <% } %>
+
+        <a href="/host/about" class="nav-link px-4 py-2 rounded-lg text-white font-medium hover:bg-white hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105">
+          <i data-lucide="info" class="w-4 h-4 inline mr-1"></i>
+          About
         </a>
-      <% } %>
+
+        <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+          <a href="/logout" class="px-4 py-2 rounded-lg bg-white bg-opacity-20 text-white font-medium hover:bg-opacity-30 transition-all duration-300 transform hover:scale-105">
+            <i data-lucide="log-out" class="w-4 h-4 inline mr-1"></i>
+            Logout
+          </a>
+        <% } else { %>
+          <a href="/login" class="px-6 py-2 rounded-lg bg-white text-purple-700 font-bold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg">
+            <i data-lucide="log-in" class="w-4 h-4 inline mr-1"></i>
+            Login
+          </a>
+        <% } %>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+        <i data-lucide="menu" class="w-8 h-8"></i>
+      </button>
     </div>
   </nav>
 
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden md:hidden nav-gradient px-6 py-4 shadow-xl">
+    <div class="flex flex-col space-y-3">
+      <a href="/" class="text-white font-medium py-2">Home</a>
+      <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+        <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+          <a href="/index" class="text-yellow-300 font-bold py-2">👑 Admin Panel</a>
+        <% } %>
+        <a href="/listings/new" class="text-white font-medium py-2">Add Listing</a>
+        <a href="/listings" class="text-white font-medium py-2">Listings</a>
+      <% } %>
+      <a href="/host/about" class="text-white font-medium py-2">About</a>
+      <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+        <a href="/logout" class="text-white font-medium py-2">Logout</a>
+      <% } else { %>
+        <a href="/login" class="text-white font-bold py-2">Login</a>
+      <% } %>
+    </div>
+  </div>
+
   <script>
     lucide.createIcons();
+    
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
   </script>
 
 </body>

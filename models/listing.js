@@ -22,6 +22,11 @@ const ListingSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Home',
+      required: false,
+    },
   },
   { timestamps: true }
 );

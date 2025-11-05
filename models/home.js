@@ -26,11 +26,19 @@ const HomeSchema = mongoose.Schema({
   profileImage: {
     type: String, // This will store the file path or URL to the image
     default: null // Allow null for users without a profile image
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 })
 
 // Ensure unique indexes exist at the database level as the source of truth
-HomeSchema.index({ email: 1 }, { unique: true })
-HomeSchema.index({ username: 1 }, { unique: true })
+// Note: unique indexes are already created by the schema definition above
 
 module.exports = mongoose.model('Home', HomeSchema);

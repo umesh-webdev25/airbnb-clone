@@ -15,17 +15,17 @@
               'poppins': ['Poppins', 'sans-serif'],
             },
             colors: {
-              'pink': {
-                '50': '#fdf2f8',
-                '100': '#fce7f3',
-                '200': '#fbcfe8',
-                '300': '#f9a8d4',
-                '400': '#f472b6',
-                '500': '#ec4899',
-                '600': '#db2777',
-                '700': '#be185d',
-                '800': '#9d174d',
-                '900': '#831843',
+              'purple': {
+                '50': '#f5f3ff',
+                '100': '#ede9fe',
+                '200': '#ddd6fe',
+                '300': '#c4b5fd',
+                '400': '#a78bfa',
+                '500': '#8b5cf6',
+                '600': '#7c3aed',
+                '700': '#6d28d9',
+                '800': '#5b21b6',
+                '900': '#4c1d95',
               }
             }
           }
@@ -34,7 +34,7 @@
     </script>
     <style>
       .gradient-text {
-        background: linear-gradient(45deg, #ec4899, #db2777);
+        background: linear-gradient(45deg, #667eea, #764ba2);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -50,13 +50,13 @@
         <p class="text-gray-600 max-w-2xl mx-auto">Browse our curated selection of beautiful properties around the world</p>
       </div>
 
-      <div class="bg-white w-full max-w-7xl px-6 py-8 rounded-xl shadow-lg space-y-6 hover:shadow-xl transition-shadow duration-300 border border-pink-100">
-        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-pink-100 pb-4 gap-4">
-          <h2 class="text-2xl font-bold text-pink-700 font-playfair">Featured Listings</h2>
+      <div class="bg-white w-full max-w-7xl px-6 py-8 rounded-xl shadow-lg space-y-6 hover:shadow-xl transition-shadow duration-300 border border-purple-100">
+        <div class="flex flex-col sm:flex-row items-center justify-between border-b border-purple-100 pb-4 gap-4">
+          <h2 class="text-2xl font-bold text-purple-700 font-playfair">Featured Listings</h2>
           <div class="flex gap-3">
             <a
               href="/listings/new"
-              class="px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2"
+              class="px-6 py-3 rounded-lg bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center gap-2 transform hover:scale-105"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
@@ -68,13 +68,13 @@
 
         <% if (!listings || listings.length === 0) { %>
           <div class="text-center py-16">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-pink-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
             <h3 class="mt-4 text-lg font-medium text-gray-900">No listings yet</h3>
             <p class="mt-1 text-gray-500">Be the first to add a beautiful property!</p>
             <div class="mt-6">
-              <a href="/listings/new" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-pink-600 hover:bg-pink-700 focus:outline-none">
+              <a href="/listings/new" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-[#667eea] to-[#764ba2] hover:shadow-lg hover:shadow-purple-500/50 focus:outline-none transform hover:scale-105 transition-all">
                 Create Listing
               </a>
             </div>
@@ -82,58 +82,66 @@
         <% } else { %>
           <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             <% listings.forEach(listing => { %>
-              <li class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-pink-200">
-                <div class="relative h-56 w-full overflow-hidden">
-                  <img
-                    src="<%= listing.imageUrl ? listing.imageUrl : 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' %>"
-                    alt="<%= listing.home %>"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onerror="this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                  <div class="absolute bottom-0 left-0 p-4 text-white">
-                    <h3 class="text-xl font-bold"><%= listing.home %></h3>
-                    <p class="text-pink-200"><%= listing.city %>, <%= listing.country %></p>
+              <% /* Only render listings that have an owner.
+                   If `user` is provided to the view, show only listings created by that user.
+                   Otherwise show all listings that have an owner. */ %>
+              <% if (listing.owner && (!user || String(listing.owner._id) === String(user._id))) { %>
+                <li class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-purple-200">
+                  <div class="relative h-56 w-full overflow-hidden">
+                    <img
+                      src="<%= listing.imageUrl ? listing.imageUrl : 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' %>"
+                      alt="<%= listing.home %>"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onerror="this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-4 text-white">
+                      <h3 class="text-xl font-bold"><%= listing.home %></h3>
+                      <p class="text-purple-200"><%= listing.city %>, <%= listing.country %></p>
+                    </div>
+                    <div class="absolute top-4 right-4 bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+                      ₹<%= listing.price.toLocaleString() %>
+                    </div>
                   </div>
-                  <div class="absolute top-4 right-4 bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
-                    ₹<%= listing.price.toLocaleString() %>
+                  <div class="p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-purple-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                        </svg>
+                        <span><%= listing.city %>, <%= listing.country %></span>
+                      </div>
+                      <div class="text-sm text-gray-600">Hosted by <span class="font-medium text-gray-900"><%= listing.owner.name %></span></div>
+                    </div>
+                    <div class="flex justify-between items-center pt-2">
+                      <a
+                        href="/listings/<%= listing._id %>"
+                        class="text-purple-600 hover:text-purple-800 font-medium flex items-center gap-1 transition-colors"
+                      >
+                        View details
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </a>
+                      <button class="text-purple-500 hover:text-purple-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div class="p-5 space-y-3">
-                  <div class="flex items-center text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-pink-400" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-                    </svg>
-                    <span><%= listing.city %>, <%= listing.country %></span>
-                  </div>
-                  <div class="flex justify-between items-center pt-2">
-                    <a
-                      href="/listings/<%= listing._id %>"
-                      class="text-pink-600 hover:text-pink-800 font-medium flex items-center gap-1 transition-colors"
-                    >
-                      View details
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                      </svg>
-                    </a>
-                    <button class="text-pink-500 hover:text-pink-700">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </li>
+                </li>
+              <% } %>
             <% }) %>
-          </ul>
+           </ul>
         <% } %>
       </div>
     </main>
 
-    <footer class="bg-white border-t border-gray-200 py-8 mt-12">
+    <footer class="bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white border-t border-white/20 py-8 mt-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-center text-gray-500 text-sm">
-          &copy; 2023 Dream Homes. All rights reserved.
+        <p class="text-center text-sm">
+          &copy; 2023 DreamStays. All rights reserved.
         </p>
       </div>
     </footer>

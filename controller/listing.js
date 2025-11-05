@@ -28,7 +28,12 @@ exports.createListing = async (req, res) => {
       });
     }
 
-    const listing = await Listing.create({ home, country, city, price });
+  // Attach owner if available (req.user comes from attachUser middleware)
+  const ownerId = req.user ? req.user._id : undefined;
+  const listingData = { home, country, city, price };
+  if (ownerId) listingData.owner = ownerId;
+
+  const listing = await Listing.create(listingData);
     res.redirect(`/listings/${listing._id}`);
   } catch (error) {
     console.error('Error creating listing:', error);
@@ -45,7 +50,7 @@ exports.listAll = async (req, res) => {
     return res.redirect('/login');
   }
   try {
-    const listings = await Listing.find({}).sort({ createdAt: -1 });
+    const listings = await Listing.find({}).sort({ createdAt: -1 }).populate('owner');
     res.render('host/listing-list', {
       isLoggedIn: req.isLoggedIn,
       listings,
@@ -59,7 +64,7 @@ exports.listAll = async (req, res) => {
 exports.showOne = async (req, res) => {
   try {
     const { id } = req.params;
-    const listing = await Listing.findById(id);
+  const listing = await Listing.findById(id).populate('owner');
     if (!listing) {
       return res.redirect('/listings');
     }

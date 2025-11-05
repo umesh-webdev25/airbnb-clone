@@ -6,23 +6,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Heroicons -->
-  <script src="https://unpkg.com/feather-icons"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animated-bg {
+      background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #667eea);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+  </style>
 </head>
 
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="animated-bg min-h-screen flex flex-col">
 
   <!-- ✅ Top Navbar -->
   <%- include('../partials/nav') %>
 
   <!-- ✅ Main Login Container -->
-  <div class="flex justify-center items-start pt-16 flex-grow">
+  <div class="flex justify-center items-center pt-16 flex-grow px-4">
     <div
-      class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md border border-gray-200 hover:shadow-pink-200 transition-shadow w-[50rem] h-full">
-      <h2 class="text-2xl font-bold text-center text-pink-600 mb-2">Login</h2>
+      class="bg-white/95 backdrop-blur-lg shadow-2xl rounded-2xl p-8 w-full max-w-md border border-purple-200 hover:shadow-purple-300/50 transition-all duration-300">
+      <div class="text-center mb-6">
+        <div class="inline-block p-3 bg-gradient-to-r from-[#667eea] to-[#764ba2] rounded-full mb-4">
+          <i data-lucide="log-in" class="w-8 h-8 text-white"></i>
+        </div>
+        <h2 class="text-3xl font-bold bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-clip-text text-transparent mb-2">Welcome Back</h2>
+        <p class="text-gray-600">Sign in to your DreamStays account</p>
+      </div>
 
       <% if (typeof errorMessage === 'string' && errorMessage) { %>
-        <div class="mb-4 text-sm text-red-700 bg-red-100 border border-red-200 rounded p-3">
+        <div class="mb-4 text-sm text-red-700 bg-red-100 border border-red-200 rounded-lg p-3 flex items-center">
+          <i data-lucide="alert-circle" class="w-4 h-4 mr-2"></i>
           <%= errorMessage %>
         </div>
       <% } %>
@@ -33,14 +52,14 @@
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email / Username</label>
           <div class="relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <i data-feather="mail"></i>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-purple-500">
+              <i data-lucide="mail" class="w-5 h-5"></i>
             </span>
             <input type="text" id="email" name="emailOrUsername"
               placeholder="Enter your email or username"
               value="<%= values && values.emailOrUsername ? values.emailOrUsername : '' %>"
               required
-              class="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400 hover:shadow-pink-200 transition-shadow" />
+              class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent hover:border-purple-300 transition-all" />
           </div>
         </div>
 
@@ -48,40 +67,45 @@
         <div>
           <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
           <div class="relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <i data-feather="lock"></i>
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-purple-500">
+              <i data-lucide="lock" class="w-5 h-5"></i>
             </span>
             <input type="password" id="password" name="password"
               placeholder="Enter your password" required
-              class="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400 hover:shadow-pink-200 transition-shadow" />
+              class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent hover:border-purple-300 transition-all" />
           </div>
         </div>
 
         <!-- Submit Button -->
         <div>
-          <input type="submit" value="Sign In"
-            class="w-full bg-pink-600 text-white py-2 rounded-md hover:bg-pink-700 transition duration-200">
+          <button type="submit"
+            class="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2">
+            <span>Sign In</span>
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </button>
         </div>
 
-        <a href="host/home" class="block text-center text-sm text-pink-600 hover:underline">
-          Don't have an account? Sign Up
-        </a>
+        <div class="text-center">
+          <a href="host/home" class="text-sm text-purple-600 hover:text-purple-800 hover:underline font-medium transition-colors">
+            Don't have an account? <span class="font-bold">Sign Up</span>
+          </a>
+        </div>
       </form>
     </div>
   </div>
 
   <!-- ✅ Footer at bottom -->
-  <footer class="bg-white border-t border-gray-200 py-8 mt-auto">
+  <footer class="bg-white/10 backdrop-blur-md border-t border-white/20 py-8 mt-auto">
     <div class="container mx-auto px-4">
-      <p class="text-center text-gray-500 text-sm">
-        &copy; 2023 Dream Homes. All rights reserved.
+      <p class="text-center text-white text-sm">
+        &copy; 2023 DreamStays. All rights reserved.
       </p>
     </div>
   </footer>
 
-  <!-- Initialize Feather Icons -->
+  <!-- Initialize Lucide Icons -->
   <script>
-    feather.replace();
+    lucide.createIcons();
   </script>
 
 </body>

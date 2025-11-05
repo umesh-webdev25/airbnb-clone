@@ -1,9 +1,10 @@
 const express = require('express');
 const authRouter = express.Router();
 const controller = require('../controller/login');
+const { validateLogin } = require('../middleware/validation');
 
 authRouter.get('/login', controller.login);
-authRouter.post('/login', controller.postLogin);
+authRouter.post('/login', validateLogin, controller.postLogin);
 
 // Logout route - improved with session clearing
 authRouter.get('/logout', (req, res) => {

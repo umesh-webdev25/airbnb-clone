@@ -1,7 +1,9 @@
 // controllers/home.js
 const Home = require('../models/home');
+const Listing = require('../models/listing');
 const path = require('path');
 const multer = require('multer');
+const bcrypt = require('bcryptjs');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -75,14 +77,24 @@ exports.adddetails = async (req, res) => {
       profileImagePath = '/uploads/' + req.file.filename;
     }
 
+    // Hash password before saving
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Check if this is the first user (make them admin)
+    const userCount = await Home.countDocuments();
+    const role = userCount === 0 ? 'admin' : 'user';
+
     await Home.create({
       name: name.trim(),
       username: username.trim(),
       email: email.toLowerCase().trim(),
-      password: password, // You should hash this password in production
-      profileImage: profileImagePath
+      password: hashedPassword,
+      profileImage: profileImagePath,
+      role: role
     });
 
+    console.log(`✅ User created with role: ${role}`);
     res.render('host/successfull');
   } catch (error) {
     console.error('Error in adddetails:', error);
@@ -164,9 +176,20 @@ exports.update = async (req, res) => {
     const updateData = {
       name: name.trim(),
       username: username.trim(),
-      email: email.toLowerCase().trim(),
-      password: password
+      email: email.toLowerCase().trim()
     };
+
+    // Only hash and update password if it's been changed
+    // Check if password is different from stored hash
+    const user = await Home.findById(id);
+    if (user && password !== user.password) {
+      // Password has been changed, hash it
+      const saltRounds = 12;
+      updateData.password = await bcrypt.hash(password, saltRounds);
+    } else {
+      // Keep existing password
+      updateData.password = password;
+    }
 
     // Handle profile image
     if (req.file) {
@@ -221,14 +244,22 @@ exports.showdetailbyid = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const user = await Home.findById(id);
+    // Fetch the user and their listings (listings are stored in the Listing collection)
+    const user = await Home.findById(id).lean();
+    const listings = await Listing.find({ owner: id }).sort({ createdAt: -1 }).lean();
+
+    if (user) {
+      // Attach the user's listings to the user object for the template
+      user.listings = listings;
+    }
 
     if (!user) {
       console.log('User not found');
       return res.redirect('/');
     }
 
-    res.render('host/detail', { Registration: [user] });
+    // Pass both `user` (for single-user detail branch) and `Registration` (for existing grid branch)
+    res.render('host/detail', { user: user, Registration: [user], isLoggedIn: true });
   } catch (err) {
     // This catches any errors from the database and prevents a crash
     console.error('Error fetching user details:', err);

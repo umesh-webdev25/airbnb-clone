@@ -6,21 +6,29 @@ body {
   background-color: #f5f5f5;
 }
 
-header {
-  background-color: #2d2c2c;
-  padding: 1rem 2rem;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
+:root{
+  --primary-500: #667eea;
+  --accent-600: #764ba2;
+  --muted: #6b7280;
 }
-
-/* nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-nav ul {
++
++body {
++  font-family: 'Poppins', 'Segoe UI', Roboto, Arial, sans-serif;
++  margin: 0;
++  padding: 0;
++  background: linear-gradient(180deg, #f8fafc 0%, #f5f3ff 100%);
++  color: #111827;
++}
++
++header {
++  background: linear-gradient(90deg, var(--primary-500), var(--accent-600));
++  padding: 0.75rem 1.5rem;
++  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08);
++  display: flex;
++  align-items: center;
++  justify-content: center;
++}
+@@
   list-style: none;
   margin: 0;
   padding: 0;

@@ -1,4 +1,5 @@
 const Home = require('../models/home');
+const bcrypt = require('bcryptjs');
 
 // GET /login
 exports.login = (req, res) => {
@@ -29,7 +30,18 @@ exports.postLogin = async (req, res) => {
       ]
     });
 
-    if (!user || user.password !== password) {
+    if (!user) {
+      return res.status(401).render('store/login', {
+        isLoggedIn: false,
+        errorMessage: 'Invalid username/email or password',
+        values: { emailOrUsername }
+      });
+    }
+
+    // Compare password with hashed password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    
+    if (!isPasswordValid) {
       return res.status(401).render('store/login', {
         isLoggedIn: false,
         errorMessage: 'Invalid username/email or password',
@@ -39,9 +51,14 @@ exports.postLogin = async (req, res) => {
 
     // Set session data
     req.session.isLoggedIn = true;
-    req.session.user = { id: user._id, username: user.username, email: user.email };
+    req.session.user = { 
+      id: user._id, 
+      username: user.username, 
+      email: user.email,
+      role: user.role || 'user' // Include role in session
+    };
 
-    res.redirect('/index');
+    res.redirect('/');
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).render('store/login', {

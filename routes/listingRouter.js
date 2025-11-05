@@ -1,5 +1,6 @@
 const express = require('express');
 const listingController = require('../controller/listing');
+const { validateListing } = require('../middleware/validation');
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ const ensureLoggedIn = (req, res, next) => {
 
 // Create
 router.get('/listings/new', ensureLoggedIn, listingController.renderCreateForm);
-router.post('/listings', ensureLoggedIn, listingController.createListing);
+router.post('/listings', ensureLoggedIn, validateListing, listingController.createListing);
 
 // Read
 router.get('/listings', ensureLoggedIn, listingController.listAll);
